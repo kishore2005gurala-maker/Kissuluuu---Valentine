@@ -217,29 +217,36 @@ setTimeout(()=>document.body.style.transform="translateX(0)",120);
 
 function proposalMode(){
 
+// PLAY MUSIC AFTER CLICK
+const music = document.getElementById("bgMusic");
+
+music.volume = 0.4; // softer romantic volume
+music.play().catch(()=>{});
+
 document.body.classList.add("spotlight");
 
-document.getElementById("bgMusic").play();
-
-<audio id="bgMusic" loop>
-    <source src="song.mp3" type="audio/mpeg">
-</audio>   and after that proposal mode doesnt have 
-    
-document.body.innerHTML += `
-<div class="card">
+// DO NOT delete body — only change card
+document.getElementById("card").innerHTML = `
 
 <h1 class="loveText"></h1>
 
-<p>
-From the moment you came into my life...
+<p style="font-size:22px; line-height:1.8;">
+From the moment you came into my life,
+everything became brighter ❤️  
+
+You are my happiness,
+my calm,
+and my favorite person.
+
+<b>Will you stay with me for all my tomorrows?</b>
 </p>
 
-</div>
 `;
 
 typeLove();
 fireworks();
-}  
+}
+ 
 
 /* typing */
 
