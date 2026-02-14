@@ -16,8 +16,28 @@ body{
     justify-content:center;
     align-items:center;
     font-family:'Montserrat', sans-serif;
-    background: linear-gradient(135deg, #000000, #140014, #2b002b);
+    background: radial-gradient(circle at center, #1a001a, #000);
     overflow:hidden;
+    transition:all 1.5s ease;
+}
+
+/* SPOTLIGHT MODE */
+
+.spotlight{
+    background:black;
+}
+
+.spotlight::after{
+    content:"";
+    position:absolute;
+    width:600px;
+    height:600px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(255,0,120,0.25), transparent 70%);
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    pointer-events:none;
 }
 
 /* CARD */
@@ -32,16 +52,29 @@ body{
     width:85%;
     max-width:520px;
     color:white;
-    animation:fadeIn 1.2s ease;
 }
 
 h1{
     font-family:'Parisienne', cursive;
-    font-size:60px;
+    font-size:64px;
     color:#ff4d9d;
 }
 
-/* BUTTONS */
+/* HEARTBEAT */
+
+.yes{
+    background:linear-gradient(45deg,#ff0055,#ff4d6d);
+    color:white;
+    animation:heartbeat 1.2s infinite;
+}
+
+@keyframes heartbeat{
+0%{transform:scale(1);}
+25%{transform:scale(1.08);}
+40%{transform:scale(0.95);}
+60%{transform:scale(1.15);}
+100%{transform:scale(1);}
+}
 
 button{
     padding:14px 26px;
@@ -57,29 +90,22 @@ button{
     color:white;
 }
 
-.yes{
-    background:linear-gradient(45deg,#ff0055,#ff4d6d);
-    color:white;
-    transition:0.3s;
-}
-
 .no{
     background:#555;
     color:white;
     position:absolute;
 }
 
-/* FLOATING HEARTS */
+/* HEARTS */
 
 .heart{
     position:absolute;
     animation:float 6s linear infinite;
-    filter: drop-shadow(0 0 12px #ff4d6d);
 }
 
 @keyframes float{
-    from{transform:translateY(100vh);}
-    to{transform:translateY(-10vh); opacity:0;}
+from{transform:translateY(100vh);}
+to{transform:translateY(-10vh); opacity:0;}
 }
 
 /* METEORS */
@@ -88,75 +114,17 @@ button{
     position:absolute;
     width:3px;
     height:90px;
-    background:linear-gradient(white, rgba(255,255,255,0));
+    background:linear-gradient(white, transparent);
     transform:rotate(45deg);
     animation:meteorFall 1s linear forwards;
 }
 
 @keyframes meteorFall{
-    from{
-        transform:translateY(-200px) translateX(0) rotate(45deg);
-    }
-    to{
-        transform:translateY(800px) translateX(400px) rotate(45deg);
-        opacity:0;
-    }
+from{transform:translateY(-200px);}
+to{transform:translateY(800px) translateX(400px); opacity:0;}
 }
 
-/* SHAKE */
-
-@keyframes shake{
-0%{transform:translateX(0);}
-25%{transform:translateX(-8px);}
-50%{transform:translateX(8px);}
-75%{transform:translateX(-8px);}
-100%{transform:translateX(0);}
-}
-
-.shake{
-animation:shake 0.4s;
-}
-
-/* FIREWORK */
-
-@keyframes explode{
-from{transform:scale(0); opacity:1;}
-to{transform:scale(4); opacity:0;}
-}
-
-/* LOVE LETTER ENVELOPE */
-
-.letter{
-    position:relative;
-    width:340px;
-    height:220px;
-    background:linear-gradient(145deg,#ff4d6d,#ff1a75);
-    border-radius:20px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-    color:white;
-    font-size:26px;
-    cursor:pointer;
-    box-shadow:0 20px 60px rgba(255,0,100,0.45);
-    transition:0.4s;
-}
-
-.letter::before{
-    content:"";
-    position:absolute;
-    top:-60px;
-    border-left:170px solid transparent;
-    border-right:170px solid transparent;
-    border-bottom:60px solid #ff1a75;
-}
-
-.letter:hover{
-    transform:translateY(-10px) scale(1.03);
-}
-
-/* TYPING CURSOR */
+/* LETTER */
 
 .loveText::after{
 content:"|";
@@ -167,15 +135,11 @@ animation:blink 1s infinite;
 50%{opacity:0;}
 }
 
-@keyframes fadeIn{
-from{
-opacity:0;
-transform:translateY(40px) scale(0.95);
-}
-to{
-opacity:1;
-transform:translateY(0) scale(1);
-}
+/* FIREWORK */
+
+@keyframes explode{
+from{transform:scale(0);}
+to{transform:scale(4); opacity:0;}
 }
 
 </style>
@@ -186,7 +150,6 @@ transform:translateY(0) scale(1);
 <div class="card" id="card">
 
 <h1>💋 Kissuluuu Valentine 💋</h1>
-
 <h2 id="text">Hey Beautiful...</h2>
 
 <button class="click" onclick="next()">Click Me</button>
@@ -195,201 +158,170 @@ transform:translateY(0) scale(1);
 
 <script>
 
-/* MESSAGE FLOW */
-
-let messages = [
+let messages=[
 "We've made so many memories ❤️",
 "You make my world brighter 😊",
 "So I have something important to ask...",
 "Will you be my Valentine? 💕"
 ];
 
-let index = 0;
+let i=0;
 
 function next(){
-if(index < messages.length-1){
-index++;
-document.getElementById("text").innerText = messages[index];
-}
-else{
-showProposal();
-}
+if(i<messages.length-1){
+i++;
+text.innerText=messages[i];
+}else showProposal();
 }
 
-/* PROPOSAL */
-
-let yesSize = 18;
+let yesSize=18;
 
 function showProposal(){
 
-document.getElementById("card").innerHTML = `
+card.innerHTML=`
 <h1>Will you be my Valentine? ❤️</h1>
-<p>I promise unlimited hugs 🤗 and annoying kisses 😘</p>
+<p>I promise unlimited hugs 🤗 and kisses 😘</p>
 
-<button class="yes" onclick="celebrate()">YES 😍</button>
+<button class="yes" onclick="proposalMode()">YES 😍</button>
 <button class="no" id="noBtn">NO 😜</button>
 `;
 
-let no = document.getElementById("noBtn");
-no.addEventListener("mouseover", moveButton);
-no.addEventListener("click", moveButton);
+let no=noBtn;
+
+["mouseover","mouseenter","click"].forEach(e=>
+no.addEventListener(e,moveButton));
+
 }
 
-/* NO BUTTON */
+/* ESCAPING NO */
 
 function moveButton(){
 
-let btn = document.getElementById("noBtn");
-let yesBtn = document.querySelector(".yes");
+noBtn.style.left=Math.random()*(window.innerWidth-120)+"px";
+noBtn.style.top=Math.random()*(window.innerHeight-80)+"px";
 
-let x = Math.random() * (window.innerWidth-100);
-let y = Math.random() * (window.innerHeight-50);
+yesSize+=12;
 
-btn.style.left = x + "px";
-btn.style.top = y + "px";
+let yes=document.querySelector(".yes");
 
-yesSize += 8;
-yesBtn.style.fontSize = yesSize + "px";
-yesBtn.style.padding = (yesSize/2) + "px " + yesSize + "px";
+yes.style.fontSize=yesSize+"px";
+yes.style.padding=(yesSize/2)+"px "+yesSize+"px";
 
-document.body.classList.add("shake");
-setTimeout(()=>{document.body.classList.remove("shake");},400);
-}
-
-/* SHOW ENVELOPE */
-
-function celebrate(){
-
-document.body.innerHTML = `
-<div class="letter" onclick="openLetter()">
-💌
-<h2>Tap to open your love letter</h2>
-</div>
-`;
+document.body.style.transform="translateX(10px)";
+setTimeout(()=>document.body.style.transform="translateX(0)",120);
 
 }
 
-/* OPEN LETTER */
+/* 🎬 PROPOSAL MODE */
 
-function openLetter(){
+function proposalMode(){
 
-document.body.innerHTML = `
+document.body.classList.add("spotlight");
+
+document.body.innerHTML=`
+
+<audio autoplay loop>
+<source src="song.mp3" type="audio/mpeg">
+</audio>
+
 <div class="card">
 
 <h1 class="loveText"></h1>
 
-<p style="font-size:20px; line-height:1.8; margin-top:20px;">
-From the moment you walked into my life, everything became softer,
-brighter, and infinitely happier ❤️  
-You are my favorite thought, my safest place,
-and the best part of every single day.
+<p style="font-size:22px; line-height:1.8;">
+From the moment you came into my life,
+everything changed ❤️  
 
-I don’t just want you today…
-I want you beside me in every tomorrow.
+You are my happiness,
+my calm,
+my favorite person.
+
+So here is what I want to ask you…
+
+<b>Will you stay with me for all my tomorrows?</b>
 </p>
-
-<h2 style="margin-top:25px; color:#ff4d9d;">
-Happy Valentine’s Day 💕
-</h2>
 
 </div>
 `;
 
 typeLove();
-startFireworks();
+fireworks();
 }
 
-/* TYPING */
+/* typing */
 
 function typeLove(){
 
-let text = "I LOVE YOUUU ❤️";
-let i = 0;
+let txt="I LOVE YOU ❤️";
+let n=0;
 
-function typing(){
-if(i < text.length){
-document.querySelector(".loveText").innerHTML += text.charAt(i);
-i++;
-setTimeout(typing,80);
+(function t(){
+if(n<txt.length){
+document.querySelector(".loveText").innerHTML+=txt[n++];
+setTimeout(t,80);
 }
-}
-
-typing();
+})();
 }
 
-/* FIREWORKS */
+/* fireworks */
 
-function startFireworks(){
+function fireworks(){
 
 setInterval(()=>{
 
-let firework = document.createElement("div");
+let f=document.createElement("div");
 
-firework.innerHTML = ["✨","💥","🎆","💫"][Math.floor(Math.random()*4)];
+f.innerHTML=["✨","💥","🎆","💫"][Math.floor(Math.random()*4)];
 
-firework.style.position="absolute";
-firework.style.left=Math.random()*100+"vw";
-firework.style.top=Math.random()*100+"vh";
-firework.style.fontSize=(20+Math.random()*50)+"px";
-firework.style.animation="explode 1s ease-out";
+f.style.position="absolute";
+f.style.left=Math.random()*100+"vw";
+f.style.top=Math.random()*100+"vh";
+f.style.fontSize=(20+Math.random()*50)+"px";
+f.style.animation="explode 1s ease-out";
 
-document.body.appendChild(firework);
+document.body.appendChild(f);
 
-setTimeout(()=>{firework.remove();},1000);
+setTimeout(()=>f.remove(),1000);
 
 },120);
-
 }
 
-/* HEARTS */
-
-function confettiHearts(){
+/* hearts */
 
 setInterval(()=>{
 
-let heart = document.createElement("div");
-let hearts = ["❤️","💖","💘","💝","💗"];
+let h=document.createElement("div");
+h.className="heart";
+h.innerHTML=["❤️","💖","💘","💝"][Math.floor(Math.random()*4)];
 
-heart.classList.add("heart");
-heart.innerHTML = hearts[Math.floor(Math.random()*hearts.length)];
+h.style.left=Math.random()*100+"vw";
+h.style.fontSize=(20+Math.random()*30)+"px";
 
-heart.style.left=Math.random()*100+"vw";
-heart.style.fontSize=(20+Math.random()*30)+"px";
+document.body.appendChild(h);
 
-document.body.appendChild(heart);
-
-setTimeout(()=>{heart.remove();},6000);
+setTimeout(()=>h.remove(),6000);
 
 },150);
 
-}
-
-confettiHearts();
-
-/* METEOR SHOWER */
-
-function meteorShower(){
+/* meteors */
 
 setInterval(()=>{
 
-let meteor = document.createElement("div");
-meteor.classList.add("meteor");
+let m=document.createElement("div");
+m.className="meteor";
 
-meteor.style.left = Math.random()*window.innerWidth + "px";
-meteor.style.top = "-100px";
+m.style.left=Math.random()*window.innerWidth+"px";
 
-document.body.appendChild(meteor);
+document.body.appendChild(m);
 
-setTimeout(()=>{meteor.remove();},1000);
+setTimeout(()=>m.remove(),1000);
 
 },700);
-
-}
-
-meteorShower();
 
 </script>
 
 </body>
 </html>
+
+
 
