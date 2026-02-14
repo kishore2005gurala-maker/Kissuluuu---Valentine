@@ -5,6 +5,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- PREMIUM FONTS -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
 <style>
 
 body{
@@ -13,24 +16,36 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
-    font-family: 'Arial';
-    background:linear-gradient(135deg,#ffd1dc,#ffe6f0);
+    font-family:'Poppins', sans-serif;
+    background: linear-gradient(135deg, #000000, #140014, #2b002b);
     overflow:hidden;
 }
 
+/* GLASS CARD */
+
 .card{
-    background:white;
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(14px);
     padding:40px;
     border-radius:25px;
     text-align:center;
-    box-shadow:0 10px 40px rgba(0,0,0,0.15);
+    box-shadow:0 10px 50px rgba(255,0,120,0.25);
     width:85%;
-    max-width:400px;
+    max-width:420px;
+    color:white;
 }
 
 h1{
-    color:#ff2e78;
+    font-family:'Great Vibes', cursive;
+    font-size:52px;
+    color:#ff4d9d;
 }
+
+h2{
+    font-weight:500;
+}
+
+/* BUTTONS */
 
 button{
     padding:14px 26px;
@@ -41,28 +56,29 @@ button{
     margin:10px;
 }
 
-.yes{
-    background:#22c55e;
+.click{
+    background:linear-gradient(45deg,#ff2e88,#ff0066);
     color:white;
+}
+
+.yes{
+    background:linear-gradient(45deg,#ff0055,#ff4d6d);
+    color:white;
+    transition:0.3s;
 }
 
 .no{
-    background:#9ca3af;
+    background:#555;
     color:white;
     position:absolute;
 }
 
-.click{
-    background:#ff2e78;
-    color:white;
-}
-
-/* floating hearts */
+/* FLOATING HEARTS */
 
 .heart{
     position:absolute;
-    color:pink;
     animation:float 6s linear infinite;
+    filter: drop-shadow(0 0 12px #ff4d6d);
 }
 
 @keyframes float{
@@ -74,6 +90,44 @@ button{
         transform:translateY(-10vh);
         opacity:0;
     }
+}
+
+/* SHAKE */
+
+@keyframes shake{
+0%{transform:translateX(0);}
+25%{transform:translateX(-8px);}
+50%{transform:translateX(8px);}
+75%{transform:translateX(-8px);}
+100%{transform:translateX(0);}
+}
+
+.shake{
+animation:shake 0.4s;
+}
+
+/* FIREWORKS */
+
+@keyframes explode{
+from{
+transform:scale(0);
+opacity:1;
+}
+to{
+transform:scale(4);
+opacity:0;
+}
+}
+
+/* TYPING CURSOR */
+
+.loveText::after{
+content:"|";
+animation:blink 1s infinite;
+}
+
+@keyframes blink{
+50%{opacity:0;}
 }
 
 </style>
@@ -93,9 +147,11 @@ button{
 
 <script>
 
+/* MESSAGE FLOW */
+
 let messages = [
 "We've made so many memories ❤️",
-"You make me smile every day 😊",
+"You make me smile every single day 😊",
 "So I have a question...",
 "Will you be my Valentine? 💕"
 ];
@@ -104,14 +160,19 @@ let index = 0;
 
 function next(){
 
-    if(index < messages.length-1){
-        index++;
-        document.getElementById("text").innerText = messages[index];
-    }
-    else{
-        showProposal();
-    }
+if(index < messages.length-1){
+index++;
+document.getElementById("text").innerText = messages[index];
 }
+else{
+showProposal();
+}
+
+}
+
+/* PROPOSAL */
+
+let yesSize = 18;
 
 function showProposal(){
 
@@ -129,37 +190,108 @@ no.addEventListener("mouseover", moveButton);
 no.addEventListener("click", moveButton);
 }
 
+/* NO BUTTON ESCAPE + YES GROW + SHAKE */
+
 function moveButton(){
 
 let btn = document.getElementById("noBtn");
+let yesBtn = document.querySelector(".yes");
 
 let x = Math.random() * (window.innerWidth-100);
 let y = Math.random() * (window.innerHeight-50);
 
 btn.style.left = x + "px";
 btn.style.top = y + "px";
+
+/* grow yes button */
+yesSize += 8;
+yesBtn.style.fontSize = yesSize + "px";
+yesBtn.style.padding = (yesSize/2) + "px " + yesSize + "px";
+
+/* shake */
+document.body.classList.add("shake");
+
+setTimeout(()=>{
+document.body.classList.remove("shake");
+},400);
+
 }
+
+/* CELEBRATION */
 
 function celebrate(){
 
 document.body.innerHTML = `
 <div class="card">
-<h1>🎉 SHE SAID YES! 🎉</h1>
+<h1 class="loveText"></h1>
 <h2>You just made me the happiest person alive ❤️</h2>
-<h2>I love youuu 😘</h2>
+<h2>I love you forever 😘</h2>
 </div>
 `;
 
-confettiHearts();
+typeLove();
+startFireworks();
 }
+
+/* TYPING LOVE */
+
+function typeLove(){
+
+let text = "I LOVE YOUUU ❤️";
+let i = 0;
+let speed = 80;
+
+function typing(){
+
+if(i < text.length){
+document.querySelector(".loveText").innerHTML += text.charAt(i);
+i++;
+setTimeout(typing, speed);
+}
+
+}
+
+typing();
+}
+
+/* FIREWORKS */
+
+function startFireworks(){
+
+setInterval(()=>{
+
+let firework = document.createElement("div");
+
+firework.innerHTML = ["✨","💥","🎆","💫"][Math.floor(Math.random()*4)];
+
+firework.style.position="absolute";
+firework.style.left=Math.random()*100+"vw";
+firework.style.top=Math.random()*100+"vh";
+firework.style.fontSize=(20+Math.random()*50)+"px";
+firework.style.animation="explode 1s ease-out";
+
+document.body.appendChild(firework);
+
+setTimeout(()=>{
+firework.remove();
+},1000);
+
+},120);
+
+}
+
+/* FLOATING HEARTS BACKGROUND */
 
 function confettiHearts(){
 
 setInterval(()=>{
 
 let heart = document.createElement("div");
+
+let hearts = ["❤️","💖","💘","💝","💗"];
+
 heart.classList.add("heart");
-heart.innerHTML="❤️";
+heart.innerHTML = hearts[Math.floor(Math.random()*hearts.length)];
 
 heart.style.left=Math.random()*100+"vw";
 heart.style.fontSize=(20+Math.random()*30)+"px";
@@ -170,7 +302,8 @@ setTimeout(()=>{
 heart.remove();
 },6000);
 
-},300);
+},150);
+
 }
 
 confettiHearts();
