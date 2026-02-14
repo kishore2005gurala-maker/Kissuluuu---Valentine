@@ -216,11 +216,15 @@ setTimeout(()=>document.body.style.transform="translateX(0)",120);
 
 function proposalMode(){
 
+// start music AFTER user click
+let music = document.getElementById("bgMusic");
+music.play().catch(()=>{});
+
 document.body.classList.add("spotlight");
 
-document.body.innerHTML=`
+document.body.innerHTML = `
 
-<audio autoplay loop>
+<audio id="bgMusic" loop autoplay>
 <source src="song.mp3" type="audio/mpeg">
 </audio>
 
@@ -230,13 +234,11 @@ document.body.innerHTML=`
 
 <p style="font-size:22px; line-height:1.8;">
 From the moment you came into my life,
-everything changed ❤️  
+everything became brighter ❤️  
 
 You are my happiness,
 my calm,
-my favorite person.
-
-So here is what I want to ask you…
+and my favorite person.
 
 <b>Will you stay with me for all my tomorrows?</b>
 </p>
@@ -247,6 +249,7 @@ So here is what I want to ask you…
 typeLove();
 fireworks();
 }
+
 
 /* typing */
 
