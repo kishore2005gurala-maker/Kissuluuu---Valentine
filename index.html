@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Kissuluuu Valentine ❤️</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family: 'Arial';
+    background:linear-gradient(135deg,#ffd1dc,#ffe6f0);
+    overflow:hidden;
+}
+
+.card{
+    background:white;
+    padding:40px;
+    border-radius:25px;
+    text-align:center;
+    box-shadow:0 10px 40px rgba(0,0,0,0.15);
+    width:85%;
+    max-width:400px;
+}
+
+h1{
+    color:#ff2e78;
+}
+
+button{
+    padding:14px 26px;
+    border:none;
+    border-radius:12px;
+    font-size:18px;
+    cursor:pointer;
+    margin:10px;
+}
+
+.yes{
+    background:#22c55e;
+    color:white;
+}
+
+.no{
+    background:#9ca3af;
+    color:white;
+    position:absolute;
+}
+
+.click{
+    background:#ff2e78;
+    color:white;
+}
+
+/* floating hearts */
+
+.heart{
+    position:absolute;
+    color:pink;
+    animation:float 6s linear infinite;
+}
+
+@keyframes float{
+    from{
+        transform:translateY(100vh);
+        opacity:1;
+    }
+    to{
+        transform:translateY(-10vh);
+        opacity:0;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card" id="card">
+
+<h1>💋 Kissuluuu Valentine 💋</h1>
+
+<h2 id="text">Hey Beautiful...</h2>
+
+<button class="click" onclick="next()">Click Me</button>
+
+</div>
+
+<script>
+
+let messages = [
+"We've made so many memories ❤️",
+"You make me smile every day 😊",
+"So I have a question...",
+"Will you be my Valentine? 💕"
+];
+
+let index = 0;
+
+function next(){
+
+    if(index < messages.length-1){
+        index++;
+        document.getElementById("text").innerText = messages[index];
+    }
+    else{
+        showProposal();
+    }
+}
+
+function showProposal(){
+
+document.getElementById("card").innerHTML = `
+<h1>Will you be my Valentine? ❤️</h1>
+<p>I promise unlimited hugs 🤗 and chocolates 🍫</p>
+
+<button class="yes" onclick="celebrate()">YES 😍</button>
+<button class="no" id="noBtn">NO 😜</button>
+`;
+
+let no = document.getElementById("noBtn");
+
+no.addEventListener("mouseover", moveButton);
+no.addEventListener("click", moveButton);
+}
+
+function moveButton(){
+
+let btn = document.getElementById("noBtn");
+
+let x = Math.random() * (window.innerWidth-100);
+let y = Math.random() * (window.innerHeight-50);
+
+btn.style.left = x + "px";
+btn.style.top = y + "px";
+}
+
+function celebrate(){
+
+document.body.innerHTML = `
+<div class="card">
+<h1>🎉 SHE SAID YES! 🎉</h1>
+<h2>You just made me the happiest person alive ❤️</h2>
+<h2>I love youuu 😘</h2>
+</div>
+`;
+
+confettiHearts();
+}
+
+function confettiHearts(){
+
+setInterval(()=>{
+
+let heart = document.createElement("div");
+heart.classList.add("heart");
+heart.innerHTML="❤️";
+
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(20+Math.random()*30)+"px";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>{
+heart.remove();
+},6000);
+
+},300);
+}
+
+confettiHearts();
+
+</script>
+
+</body>
+</html>
