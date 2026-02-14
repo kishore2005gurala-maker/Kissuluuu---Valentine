@@ -4,7 +4,7 @@
 <title>Kissuluuu Valentine ❤️</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
 <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
@@ -18,29 +18,15 @@ body{
     font-family:'Montserrat', sans-serif;
     background: radial-gradient(circle at center, #1a001a, #000);
     overflow:hidden;
-    transition:all 1.5s ease;
 }
 
-/* SPOTLIGHT MODE */
+/* spotlight */
 
 .spotlight{
     background:black;
 }
 
-.spotlight::after{
-    content:"";
-    position:absolute;
-    width:600px;
-    height:600px;
-    border-radius:50%;
-    background:radial-gradient(circle, rgba(255,0,120,0.25), transparent 70%);
-    top:50%;
-    left:50%;
-    transform:translate(-50%, -50%);
-    pointer-events:none;
-}
-
-/* CARD */
+/* card */
 
 .card{
     background: rgba(255,255,255,0.06);
@@ -60,7 +46,7 @@ h1{
     color:#ff4d9d;
 }
 
-/* HEARTBEAT */
+/* heartbeat */
 
 .yes{
     background:linear-gradient(45deg,#ff0055,#ff4d6d);
@@ -96,7 +82,7 @@ button{
     position:absolute;
 }
 
-/* HEARTS */
+/* hearts */
 
 .heart{
     position:absolute;
@@ -108,7 +94,7 @@ from{transform:translateY(100vh);}
 to{transform:translateY(-10vh); opacity:0;}
 }
 
-/* METEORS */
+/* meteors */
 
 .meteor{
     position:absolute;
@@ -124,7 +110,7 @@ from{transform:translateY(-200px);}
 to{transform:translateY(800px) translateX(400px); opacity:0;}
 }
 
-/* LETTER */
+/* typing */
 
 .loveText::after{
 content:"|";
@@ -135,7 +121,7 @@ animation:blink 1s infinite;
 50%{opacity:0;}
 }
 
-/* FIREWORK */
+/* fireworks */
 
 @keyframes explode{
 from{transform:scale(0);}
@@ -146,6 +132,11 @@ to{transform:scale(4); opacity:0;}
 </head>
 
 <body>
+
+<!-- ⭐ AUDIO (ONLY ONE) -->
+<audio id="bgMusic" loop>
+    <source src="song.mp3" type="audio/mpeg">
+</audio>
 
 <div class="card" id="card">
 
@@ -193,7 +184,7 @@ no.addEventListener(e,moveButton));
 
 }
 
-/* ESCAPING NO */
+/* escaping no */
 
 function moveButton(){
 
@@ -207,26 +198,33 @@ let yes=document.querySelector(".yes");
 yes.style.fontSize=yesSize+"px";
 yes.style.padding=(yesSize/2)+"px "+yesSize+"px";
 
-document.body.style.transform="translateX(10px)";
-setTimeout(()=>document.body.style.transform="translateX(0)",120);
-
 }
 
-/* 🎬 PROPOSAL MODE */
-
+/* 🎬 CINEMATIC PROPOSAL */
 
 function proposalMode(){
 
-// PLAY MUSIC AFTER CLICK
-const music = document.getElementById("bgMusic");
+const music=document.getElementById("bgMusic");
 
-music.volume = 0.4; // softer romantic volume
+/* start silent */
+music.volume=0;
 music.play().catch(()=>{});
+
+/* fade in */
+let vol=0;
+
+let fade=setInterval(()=>{
+if(vol<0.35){
+vol+=0.02;
+music.volume=vol;
+}else{
+clearInterval(fade);
+}
+},120);
 
 document.body.classList.add("spotlight");
 
-// DO NOT delete body — only change card
-document.getElementById("card").innerHTML = `
+card.innerHTML=`
 
 <h1 class="loveText"></h1>
 
@@ -246,7 +244,6 @@ and my favorite person.
 typeLove();
 fireworks();
 }
- 
 
 /* typing */
 
@@ -322,6 +319,4 @@ setTimeout(()=>m.remove(),1000);
 
 </body>
 </html>
-
-
 
